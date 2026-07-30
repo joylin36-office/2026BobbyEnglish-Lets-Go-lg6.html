@@ -37,7 +37,7 @@
             padding: 30px 40px;
         }
 
-        /* 🎯 任務 2：第一頁抬頭最上方動態智慧生產字樣（原樣原封不動，不破壞版面） */
+        /* 🎯 抬頭最上方動態智慧生產字樣 */
         .dynamic-top-banner {
             font-size: 15px;
             font-weight: bold;
@@ -139,7 +139,7 @@
             border-radius: 4px 4px 0 0;
         }
 
-        /* 🔒 守護方格地基：死死鎖定傳統表格排版，不使用任何手機端拆散方格的規則 */
+        /* 🔒 守護方格地基 */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -407,7 +407,6 @@
             .extra-summer-box { border: 1px solid #666; background-color: transparent; }
         }
 
-        /* 改用橫向溢位自動縮放護盾，手機平板電腦 100% 畫面完美自適應 */
         @media (max-width: 768px) {
             body { padding: 8px; }
             .page { padding: 15px 10px; }
@@ -436,7 +435,6 @@
         <input type="hidden" id="summer_pm_selected" name="summer_pm_selected" value="">
 
         <div class="page page1">
-            <!-- 🎯 任務 2：第一頁最高處抬頭一行字，自帶動態大腦感應天線 -->
             <div id="dynamicBannerDisplay" class="dynamic-top-banner">載入中...</div>
 
             <div class="header-section">
@@ -492,11 +490,11 @@
                         <th><span class="zh-title">與學生關係</span><span class="en-title">Relationship</span></th>
                         <td><input type="text" name="relation" class="text-input" placeholder="" required></td>
                         <th><span class="zh-title">聯絡電話</span><span class="en-title">Phone Number</span></th>
-                        <td><input type="tel" name="phone" class="text-input" placeholder="主要聯絡手機" required></td>
+                        <td><input type="tel" name="phone" class="text-input" placeholder="0912345678" required></td>
                     </tr>
                     <tr>
                         <th><span class="zh-title">電子信箱</span><span class="en-title">E-mail</span></th>
-                        <td colspan="3"><input type="email" name="email" class="text-input" placeholder=""></td>
+                        <td colspan="3"><input type="email" name="email" class="text-input" placeholder="example@email.com"></td>
                         <th><span class="zh-title">LINE ID</span><span class="en-title">LINE ID</span></th>
                         <td><input type="text" name="line_id" class="text-input" placeholder="LINE ID"></td>
                     </tr>
@@ -521,7 +519,6 @@
                     <tr id="standardDiscountRow">
                         <th><span class="zh-title">優惠方案配置</span><span class="en-title">Discount Plan</span></th>
                         <td colspan="5">
-                            <!-- 🎯 黃金細節一修復：中英文雙解說方案選項全部就位 -->
                             <div class="radio-group">
                                 <label><input type="radio" name="discount_plan" value="1.0" checked onchange="calculateTuition()"> 常態收費原價 (Full Price)</label>
                                 <label><input type="radio" name="discount_plan" value="0.9" onchange="calculateTuition()"> 9 折優惠 (10% OFF)</label>
@@ -533,7 +530,6 @@
                 </tbody>
             </table>
 
-            <!-- 暑期專案加購區（預設隱藏） -->
             <div class="extra-summer-box" id="summerConfigBox">
                 <div class="extra-summer-title">☀️ 暑期課程特別配置艙 (Summer Options)</div>
                 <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; font-size: 13px; padding-left: 8px;">
@@ -564,7 +560,6 @@
                 <tbody>
                     <tr>
                         <th><span class="zh-title">應繳總金額</span><span class="en-title">Total Amount</span></th>
-                        <!-- 🎯 黃金細節二確認：預設顯示金額 "$" 符號 -->
                         <td><input type="text" id="total_amount" name="total_amount" class="text-input" style="font-weight: bold; color: #c00; font-size: 16px;" placeholder="$" readonly></td>
                         <th><span class="zh-title">付款方式</span><span class="en-title">Payment Method</span></th>
                         <td colspan="3">
@@ -621,7 +616,7 @@
                 </div>
                 <div class="term-item">
                     <strong>4. 肖像權合理授權 / Portrait Rights Authorization：</strong><br>
-                    家長同意本班在節慶活動、課堂成果中進行拍照 or 錄影，合理授權作為內部成果展示與官方推廣使用，且不損及學生名譽。<br>
+                    家長同意本班在節慶活動、課堂成果中進行拍照或錄影，合理授權作為內部成果展示與官方推廣使用，且不損及學生名譽。<br>
                     <span style="color: #555; font-style: italic;">Parents agree to allow the school to take photos or videos during holiday activities and class presentations. This constitutes a rational authorization for internal displays and official promotional use, ensuring that student reputation is fully protected.</span>
                 </div>
             </div>
@@ -639,7 +634,7 @@
                     </div>
                     <div class="signature-row">
                         <span>日期 Date</span>
-                        <input type="date" name="parent_sig_date" class="signature-input" required>
+                        <input type="date" name="parent_sig_date" id="parentSigDate" class="signature-input" required>
                     </div>
                 </div>
 
@@ -650,7 +645,7 @@
                     </div>
                     <div class="signature-row">
                         <span>日期 Date</span>
-                        <input type="date" name="teacher_sig_date" class="signature-input">
+                        <input type="date" name="teacher_sig_date" id="teacherSigDate" class="signature-input">
                     </div>
                 </div>
             </div>
@@ -665,7 +660,6 @@
 <script>
 // ===== 核心報名表對應資料庫 =====
 var courseDatabase = {
-    /* 🎯 核心課務時段修正：將原本混合的時段改裝成 Joy 指定的「每週一、三、五 4:30 PM - 6:30 PM」 */
     "Let's Go 6": { label: "Let's Go 6 兒童高階美語 (中英雙語教學)", time: "每週一、三、五 4:30 PM - 6:30 PM", lessons: 51, price: 620, materials: 1612, misc: 60 }
 };
 
@@ -674,7 +668,6 @@ var courseDatabase = {
 // ==========================================
 var TARGET_COURSE = "Let's Go 6"; 
 
-
 // 頁面初始化自動綁定與運算
 window.onload = function() {
     document.getElementById('course_name_hidden').value = TARGET_COURSE;
@@ -682,10 +675,13 @@ window.onload = function() {
     
     document.getElementById('mainTitleDisplay').innerHTML = "巴比美語補習班 ｜ " + TARGET_COURSE + " 專屬智慧報名系統";
     document.getElementById('subTitleDisplay').innerHTML = "Bobby English School - " + TARGET_COURSE + " Enrollment Form";
-    
-    // 🚀 任務 2 智慧生產天線：自動在抬頭最上方動態生成專屬報名系統文字
     document.getElementById('dynamicBannerDisplay').innerHTML = TARGET_COURSE + " 專屬智慧報名系統";
     
+    // 🎯 自動時光晶片：開啟頁面自動帶入當天日期
+    var today = new Date().toISOString().split('T')[0];
+    if (document.getElementById('parentSigDate')) document.getElementById('parentSigDate').value = today;
+    if (document.getElementById('teacherSigDate')) document.getElementById('teacherSigDate').value = today;
+
     calculateTuition();
 };
 
@@ -715,7 +711,6 @@ function calculateTuition() {
         document.getElementById('sub_materials').value = materialsTotal;
         document.getElementById('sub_misc').value = miscTotal;
         
-        // 🎯 黃金細節二修復：讓動態大腦實時計算時，把 "$" 符號牢牢綁在鮮紅色數字前方！
         totalInput.value = "$" + finalTotal;
 
         timeDisplay.innerText = course.time;
@@ -775,15 +770,18 @@ document.getElementById('enrollmentForm').addEventListener('submit', function(e)
     
     var googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbxt07hF-qkXePULEBjuCpzdWnaeNWsTlQV7dRhch_iBwtVePOIJzldTAsR0LothoQ1l/exec";
     
+    // 🎯 核心補強：加入 mode: 'no-cors' 避開瀏覽器跨域安全性連線阻斷
     fetch(googleAppsScriptUrl, {
         method: 'POST',
+        mode: 'no-cors',
         body: new URLSearchParams(new FormData(form))
     })
     .then(function() {
         alert("🎉 巴比美語：單一課程專屬雲端連線登記成功！");
         form.submit(); 
     })
-    .catch(function() {
+    .catch(function(error) {
+        console.warn("GAS Sync notice:", error);
         form.submit();
     });
 });
